@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baralho em Libras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #baralho {
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: inline-block;
+        }
+        .carta {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #000;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Baralho em Libras</h1>
+<div id="baralho"></div>
+<button id="tirarCartaBtn">Tirar uma Carta</button>
+<p id="cartaTirada"></p>
+
+<script>
+// Definindo os naipes e valores em Libras (representação textual)
+const naipes = ['❤️ (Copas)', '♠️ (Espadas)', '♦️ (Ouros)', '♣️ (Paus)'];
+const valores = ['👋 (Ás)', '✌️ (2)', '🤟 (3)', '👌 (4)', '✋ (5)', '🖐️ (6)', '🖖 (7)', '👆 (8)', '👇 (9)', '👍 (10)', '👐 (Valete)', '🤲 (Dama)', '✋🏽 (Rei)'];
+
+// Criando o baralho
+let baralho = [];
+
+// Função para criar o baralho
+function criarBaralho() {
+    for (let naipe of naipes) {
+        for (let valor of valores) {
+            baralho.push(`${valor} de ${naipe}`);
+        }
+    }
+}
+
+// Função para tirar uma carta aleatória
+function tirarCarta() {
+    if (baralho.length === 0) {
+        return 'O baralho está vazio!';
+    }
+    const indiceAleatorio = Math.floor(Math.random() * baralho.length);
+    const carta = baralho[indiceAleatorio];
+    baralho.splice(indiceAleatorio, 1); // Remove a carta do baralho
+    return carta;
+}
+
+// Função para exibir o baralho na página
+function exibirBaralho() {
+    const baralhoDiv = document.getElementById('baralho');
+    baralhoDiv.innerHTML = '';
+    for (const carta of baralho) {
+        const cartaDiv = document.createElement('div');
+        cartaDiv.className = 'carta';
+        cartaDiv.textContent = carta;
+        baralhoDiv.appendChild(cartaDiv);
+    }
+}
+
+// Inicializando o baralho e exibindo
+criarBaralho();
+exibirBaralho();
+
+// Evento para o botão
+document.getElementById('tirarCartaBtn').addEventListener('click', function() {
+    const cartaTirada = tirarCarta();
+    document.getElementById('cartaTirada').textContent = `Você tirou: ${cartaTirada}`;
+    exibirBaralho();
+});
+</script>
+
+</body>
+</html>
+
